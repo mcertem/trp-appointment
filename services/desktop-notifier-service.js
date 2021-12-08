@@ -1,4 +1,5 @@
 const notifier = require('node-notifier');
+const { isDesktopNotificationsActive } = require('../util/preferences');
 
 const templateMessage = {
     title: 'My notification',
@@ -7,6 +8,10 @@ const templateMessage = {
 }
 
 exports.showSimpleMessage = (title, message) => {
+    if (!isDesktopNotificationsActive) {
+        return;
+    }
+
     notifier.notify({
         title,
         message
@@ -14,5 +19,9 @@ exports.showSimpleMessage = (title, message) => {
 }
 
 exports.showMessage = () => {
+    if (!isDesktopNotificationsActive) {
+        return;
+    }
+    
     notifier.notify(templateMessage);
 }

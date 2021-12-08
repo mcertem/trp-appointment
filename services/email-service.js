@@ -1,4 +1,5 @@
 const nodemailer = require('nodemailer');
+const { isEmailNotificationsActive } = require('../util/preferences');
 const dotenv = require('dotenv').config();
 
 const transporter = nodemailer.createTransport({
@@ -16,6 +17,10 @@ const defaultMailOptions = {
 };
 
 sentNotificationMail = (options = defaultHtmlMailOptions) => {
+    if (!isEmailNotificationsActive) {
+        return;
+    }
+
     transporter.sendMail(options, function (error, info) {
         if (error) {
             console.log(error);
