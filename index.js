@@ -4,8 +4,8 @@ const { sentAvailableDatesNotificationMail } = require("./services/email-service
 
 const tammsaareOffice = 'cmQszYWUMkS1QtgqEtJv7w'
 
-//const websiteUrl = `https://broneering.politsei.ee/MakeReservation/SelectTime?serviceId=H_GGs4WzRUW23mKUtDVIcA&branchId=${tammsaareOffice}`;
-const websiteUrl = 'https://broneering.politsei.ee/MakeReservation/SelectTime?serviceId=H_GGs4WzRUW23mKUtDVIcA&branchId=cmQszYWUMkS1QtgqEtJv7w&selectedMonth=P1yFwA#monthSelector'
+const websiteUrl = `https://broneering.politsei.ee/MakeReservation/SelectTime?serviceId=H_GGs4WzRUW23mKUtDVIcA&branchId=${tammsaareOffice}`;
+//const websiteUrl = 'https://broneering.politsei.ee/MakeReservation/SelectTime?serviceId=H_GGs4WzRUW23mKUtDVIcA&branchId=cmQszYWUMkS1QtgqEtJv7w&selectedMonth=P1yFwA#monthSelector'
 const monthName = 'December';
 
 request(websiteUrl, (error, response, html) => {
