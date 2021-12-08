@@ -1,9 +1,11 @@
+const { showSimpleMessage } = require("../services/desktop-notifier-service");
 const { sentAvailableDatesNotificationMail, sentErrorNotificationMail } = require("../services/email-service");
 const { executeScrapper } = require("../services/trp-scrapper");
 
 function sendMailAboutDates(dates) {
     if (dates?.length) {
         sentAvailableDatesNotificationMail(dates);
+        showSimpleMessage('Acele Et', 'Uygun Tarihler Var');
     }
 }
 
