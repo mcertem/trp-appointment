@@ -1,37 +1,60 @@
 const cron = require('node-cron');
-const { checkTrp } = require('./cron-jobs');
+const { checkTrp } = require('../services/trp-service');
 
 const EVERY_MINUTE = '* * * * *'
-const tasks = { 'TRP': { period: EVERY_MINUTE, isRunning: false, task: null } };
 
-exports.startTrpChecker = () => {    
-    if (tasks['TRP'].isRunning) {        
-        console.log('Already running');
+// To add new cron-jobs:
+// just add job definitions to the jobs array as a new object.
+// And define callback function in other file
+// Finally call startJob from index.js
+const jobs = { 'TRP': { period: EVERY_MINUTE, isRunning: false, task: null, callback: checkTrp } };
+
+
+exports.startJob = (jobName) => {    
+    if (!validateStartingJob(jobName)) {
         return;
     }
+    
+    const job = jobs[jobName];
 
-    if (tasks['TRP'].task) {
-        tasks['TRP'].task.start();
+    if (job.task) {
+        job.task.start();
     } else {
-        tasks['TRP'].task = cron.schedule(tasks['TRP'].period, () => {
+        job.task = cron.schedule(job.period, () => {
             try {
-                checkTrp();
+                job.callback();
             } 
             catch {
-                stopTrpChecker();
+                stopJob(job);
             }
         });
     }
 
-    tasks['TRP'].isRunning = true;
+    job.isRunning = true;
 }
 
-stopTrpChecker = () => {
-    if (!tasks['TRP'].isRunning) {        
-        console.log('Already stopped');
+const stopJob = (job) => {
+    if (!job.isRunning) {        
+        console.log(`${job.jobName} already stopped`);
         return;
     }
-    tasks['TRP'].task.stop();
-    tasks['TRP'].isRunning = false;
+    job.task.stop();
+    job.isRunning = false;
 
+}
+
+const validateStartingJob = (jobName) => {
+    let isValid = true;
+
+    if (jobs[jobName]) {
+        console.log(`There is no task with "${jobName}" name`);
+        isValid = false;
+    }
+    
+    else if (jobs[jobName].isRunning) {        
+        console.log('Already running');
+        isValid = false;
+    }
+
+    return isValid;
 }

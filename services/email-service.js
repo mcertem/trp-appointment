@@ -9,18 +9,10 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-const defaulttextMailOptions = {
+const defaultMailOptions = {
     from: process.env.EMAIL_ADDRESS,
     to: process.env.EMAIL_ADDRESS_TO_MULTIPLE,
-    subject: 'Sending Email using Node.js',
-    text: 'That was easy!'
-};
-
-const defaultHtmlMailOptions = {
-    from: process.env.EMAIL_ADDRESS,
-    to: process.env.EMAIL_ADDRESS_TO_MULTIPLE,
-    subject: 'Takvimde Boşluk Oluştu',
-    html: '<h1>ACELE ET</h1><p>Takvimde boşluk oluştu!</p>'
+    subject: 'Node.js ile gelen mail'
 };
 
 sentNotificationMail = (options = defaultHtmlMailOptions) => {
@@ -33,15 +25,12 @@ sentNotificationMail = (options = defaultHtmlMailOptions) => {
     });
 };
 
-exports.sentAvailableDatesNotificationMail = (dates) => {
-    const options = { ...defaultHtmlMailOptions };
-    for (const date of dates) {
-        options.html += `<p>${date}</p>`;
-    }
+exports.sentHtmlBodyNotificationMail = (subject, body) => {
+    const options = { ...defaultMailOptions, subject, html: body };    
     sentNotificationMail(options);
 };
 
 exports.sentErrorNotificationMail = () => {
-    const options = { ...defaulttextMailOptions, subject:'Programda Hata', text:'Bir kontrol et istersen' };
+    const options = { ...defaultMailOptions, subject:'Programda Hata', text:'Bir kontrol et istersen' };
     sentNotificationMail(options);
 };

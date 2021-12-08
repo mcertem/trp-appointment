@@ -1,4 +1,4 @@
 
-const { startTrpChecker } = require("./cron/cron-jobs-scheduler");
+const { startJob } = require("./cron/cron-jobs-scheduler");
 
-startTrpChecker();
+startJob('TRP');
