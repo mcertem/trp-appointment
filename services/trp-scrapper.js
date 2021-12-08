@@ -18,6 +18,8 @@ exports.executeScrapper = async (callback) => {
             console.log(`Unsuccesful request ${response.statusMessage}`);
             throw new Error('Unsuccesful request');
         }
+
+        callback(html);
     
         const $ = cheerio.load(html);
         const days = $(".day.clickable");

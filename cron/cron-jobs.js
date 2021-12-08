@@ -1,5 +1,5 @@
 const { sentAvailableDatesNotificationMail, sentErrorNotificationMail } = require("../services/email-service");
-const { executeScrapper } = require("../services/web-scrapper");
+const { executeScrapper } = require("../services/trp-scrapper");
 
 function sendMailAboutDates(dates) {
     if (dates?.length) {
