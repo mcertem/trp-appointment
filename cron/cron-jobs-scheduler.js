@@ -1,14 +1,18 @@
 const cron = require('node-cron');
+const { checkAevaStockPrice } = require('../services/investing-service');
 const { checkTrp } = require('../services/trp-service');
 
-const EVERY_MINUTE = '* * * * *'
+const EVERY_MINUTE = '* * * * *';
+const EVERY_TEN_SECONDS = '*/10 * * * * *';
 
 // To add new cron-jobs:
 // just add job definitions to the jobs array as a new object.
 // And define callback function in other file
 // Finally call startJob from index.js
-const jobs = { 'TRP': { period: EVERY_MINUTE, isRunning: false, task: null, callback: checkTrp } };
-
+const jobs = { 
+    'TRP': { period: EVERY_MINUTE, isRunning: false, task: null, callback: checkTrp },
+    'Aeva': { period: EVERY_TEN_SECONDS, isRunning: false, task: null, callback: checkAevaStockPrice }
+};
 
 exports.startJob = (jobName) => {    
     if (!validateStartingJob(jobName)) {
@@ -46,8 +50,8 @@ const stopJob = (job) => {
 const validateStartingJob = (jobName) => {
     let isValid = true;
 
-    if (jobs[jobName]) {
-        console.log(`There is no task with "${jobName}" name`);
+    if (!jobs[jobName]) {
+        console.log(`There is no task with name "${jobName}"`);
         isValid = false;
     }
     
