@@ -40,3 +40,8 @@ exports.sentAvailableDatesNotificationMail = (dates) => {
     }
     sentNotificationMail(options);
 };
+
+exports.sentErrorNotificationMail = () => {
+    const options = { ...defaulttextMailOptions, subject:'Programda Hata', text:'Bir kontrol et istersen' };
+    sentNotificationMail(options);
+};
