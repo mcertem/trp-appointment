@@ -1,0 +1,19 @@
+{
+  "name": "trp-appointment",
+  "version": "1.0.0",
+  "description": "web scrapper tool for trp appointment from estonia",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mcertem/trp-appointment.git"
+  },
+  "author": "mustafa cem ertem",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mcertem/trp-appointment/issues"
+  },
+  "homepage": "https://github.com/mcertem/trp-appointment#readme"
+}
