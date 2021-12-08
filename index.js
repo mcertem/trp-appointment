@@ -1,9 +1,11 @@
 const request = require("request-promise");
 const cheerio = require("cheerio");
+const { sentAvailableDatesNotificationMail } = require("./services/email-service");
 
 const tammsaareOffice = 'cmQszYWUMkS1QtgqEtJv7w'
 
-const websiteUrl = `https://broneering.politsei.ee/MakeReservation/SelectTime?serviceId=H_GGs4WzRUW23mKUtDVIcA&branchId=${tammsaareOffice}`;
+//const websiteUrl = `https://broneering.politsei.ee/MakeReservation/SelectTime?serviceId=H_GGs4WzRUW23mKUtDVIcA&branchId=${tammsaareOffice}`;
+const websiteUrl = 'https://broneering.politsei.ee/MakeReservation/SelectTime?serviceId=H_GGs4WzRUW23mKUtDVIcA&branchId=cmQszYWUMkS1QtgqEtJv7w&selectedMonth=P1yFwA#monthSelector'
 const monthName = 'December';
 
 request(websiteUrl, (error, response, html) => {
@@ -26,12 +28,7 @@ request(websiteUrl, (error, response, html) => {
     });
     
     if (availableTimeSlots.length) {
-        for(const time of availableTimeSlots) {
-            console.log(time);
-        }
-    }
-    else {
-        console.log('no available times');
+        sentAvailableDatesNotificationMail(availableTimeSlots.filter(Boolean));
     }
         
 });
